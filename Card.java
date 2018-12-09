@@ -65,5 +65,8 @@ public class Card {
 		this.rank = rank;
 	}
 	
+	public String toString() {
+		return (rank + " of " + suit);
+	}
 	
 }

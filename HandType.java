@@ -17,7 +17,7 @@ public enum HandType {
 		this.intValue = intValue;
 	}
 	
-	public int getHandType() {
+	public int getRank() {
 		return this.intValue;
 	}
 }
