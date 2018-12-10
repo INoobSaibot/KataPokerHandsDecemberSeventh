@@ -10,6 +10,7 @@ public class PokerHand implements java.lang.Iterable<Card> {
 	private int backUpRank1;
 	private int backUpRank2;
 	private int backUpRank3;
+	private int backUpRank4;
 
 	
 	private List<Card> cardList = new ArrayList<Card>();
@@ -94,6 +95,14 @@ public class PokerHand implements java.lang.Iterable<Card> {
 
 	public void setBackUpRank3(int backUpRank3) {
 		this.backUpRank3 = backUpRank3;
+	}
+
+	public int getBackUpRank4() {
+		return backUpRank4;
+	}
+
+	public void setBackUpRank4(int backUpRank4) {
+		this.backUpRank4 = backUpRank4;
 	}
 	
 	

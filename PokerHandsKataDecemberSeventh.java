@@ -23,11 +23,11 @@ public class PokerHandsKataDecemberSeventh {
 		PokerHand twoPairs_lower = new PokerHand("ac as 2h 2c 3D");
 		PokerHand onePair = new PokerHand("2c 2h 3c 4c 5c");
 		PokerHand onePair_backUpRank_higher = new PokerHand("2s 2d 3d 4d 6d");
-		PokerHand h2 = new PokerHand("2h 3d 6h 5D 7S");
-		PokerHand h1 = new PokerHand("2H 3D 5S 9C KD");
+		PokerHand h2 = new PokerHand("2h 4d 5h 9D KH");
+		PokerHand h1 = new PokerHand("3H 4D 5S 9C KD");
 		
 		
-		Dealer.startGame(onePair, onePair_backUpRank_higher);
+		Dealer.startGame(h1, onePair);
 		
 		
 	}

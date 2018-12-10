@@ -43,7 +43,41 @@ public class Dealer {
 				" over " + hand1.getBackUpRank1());
 			}
 			
+			// if backup1 ranks are equal, check for back up ranks 2
+			else if(hand1.getBackUpRank2() > hand2.getBackUpRank2()) {
+				System.out.println("Black wins. - with " +
+				determineHandType(hand1) + ": " + hand1.getBackUpRank2() +
+				" over " + hand2.getBackUpRank2());
+				}
+			else if(hand1.getBackUpRank2() < hand2.getBackUpRank2()) {
+				System.out.println("White wins. with " +
+				determineHandType(hand2) + ": " + hand2.getBackUpRank2() +
+				" over " + hand1.getBackUpRank2());
+			}
 			
+			// if backup2 ranks are equal, check for back up ranks 3
+			else if(hand1.getBackUpRank3() > hand2.getBackUpRank3()) {
+				System.out.println("Black wins. - with " +
+				determineHandType(hand1) + ": " + hand1.getBackUpRank3() +
+				" over " + hand2.getBackUpRank3());
+				}
+			else if(hand1.getBackUpRank3() < hand2.getBackUpRank3()) {
+				System.out.println("White wins. with " +
+				determineHandType(hand2) + ": " + hand2.getBackUpRank3() +
+				" over " + hand1.getBackUpRank3());
+			}
+			
+			// if backup3 ranks are equal, check for back up ranks 4
+			else if(hand1.getBackUpRank4() > hand2.getBackUpRank4()) {
+				System.out.println("Black wins. - with " +
+				determineHandType(hand1) + ": " + hand1.getBackUpRank4() +
+				" over " + hand2.getBackUpRank4());
+				}
+			else if(hand1.getBackUpRank4() < hand2.getBackUpRank4()) {
+				System.out.println("White wins. with " +
+				determineHandType(hand2) + ": " + hand2.getBackUpRank4() +
+				" over " + hand1.getBackUpRank4());
+			}
 			
 			
 			// no clear winner, same hand type same high rank card
@@ -116,7 +150,7 @@ public class Dealer {
 		onePair = if_hasMatches(hand, 2);
 		int rank;
 		
-		if(onePair){
+		if(true){
 			for (Card card: hand) {
 				rank = card.getRank();
 				//if not cards that are part of the primary pair rank :)
@@ -131,6 +165,11 @@ public class Dealer {
 			hand.setBackUpRank1(backUpRanks.get(0));
 			hand.setBackUpRank2(backUpRanks.get(1));
 			hand.setBackUpRank3(backUpRanks.get(2));
+			
+			// IF THERE is one more value, basically 
+			//one pair hand case vs high card case with 3 vs 4 rank backups respectively
+			if(backUpRanks.size() > 3)
+				hand.setBackUpRank4(backUpRanks.get(3));
 		}	
 		return onePair;
 	}
