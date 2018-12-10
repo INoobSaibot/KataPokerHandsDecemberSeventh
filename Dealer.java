@@ -24,14 +24,14 @@ public class Dealer {
 			//System.out.println("Hand Types are the same");
 			if(hand1.getHighCardRank() > hand2.getHighCardRank()) {
 				System.out.println("Black wins. - with " +
-				determineHandType(hand1) + ": " + hand1.getHighCardRank() +
-				" over " + hand2.getHighCardRank());
+				determineHandType(hand1) + ": " + hand1.getHighCardString() +
+				" over " + hand2.getHighCardString());
 			}
 			
 			else if(hand1.getHighCardRank() < hand2.getHighCardRank()) {
 				System.out.println("White wins. with " +
-				determineHandType(hand2) + ": " + hand2.getHighCardRank() +
-				" over " + hand1.getHighCardRank());
+				determineHandType(hand2) + ": " + hand2.getHighCardString() +
+				" over " + hand1.getHighCardString());
 			}
 			
 			else{
@@ -81,6 +81,10 @@ public class Dealer {
 		if(is_straight(hand)) {
 			return HandType.STRAIGHT;
 		}
+		
+		if(is_three_of_a_kind(hand)) {
+			return HandType.THREE_OF_A_KIND;
+		}
 	
 		else {
 			hand.setHighCardRank(getHighestCard(hand));
@@ -89,6 +93,35 @@ public class Dealer {
 	} // end of method
 	
 	
+	private static boolean is_three_of_a_kind(PokerHand hand) {
+		// TODO Auto-generated method stub
+		
+		return if_of_a_kind(hand, 3);
+	}
+	
+	private static boolean if_of_a_kind(PokerHand hand, int needed) {
+		int amountNeeded;
+		amountNeeded = needed;
+		int matches;
+		matches = 0;
+		
+		for(Card card: hand) {
+			matches = 0;
+			for(Card compareCard: hand ) {
+				if(card.getRank() == compareCard.getRank()) {
+					matches +=1;
+					
+					if(matches == amountNeeded) {
+						hand.setHighCardRank(card.getRank());
+						return true;
+					}
+				}
+			}
+		}
+		return false;	
+	}
+
+
 	private static boolean is_straight(PokerHand hand) {
 		// TODO Auto-generated method stub
 		if(consecutiveValues(hand)) {

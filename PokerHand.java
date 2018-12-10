@@ -35,6 +35,34 @@ public class PokerHand implements java.lang.Iterable<Card> {
 	public int getHighCardRank() {
 		return highCardRank;
 	}
+	
+	public String getHighCardString() {
+		int rank = getHighCardRank();
+		
+		if (rank < 10)
+			return Integer.toString(rank);
+		
+		// switch cases for Ace, King, Queen, Jack, Ten
+		switch(rank)
+		{
+		case 14:
+			return "Ace";
+		
+		case 13:
+			return "King";
+		
+		case 12:
+			return "Queen";
+		
+		case 11:
+			return "Jack";
+			
+		case 10:
+			return "Ten";
+		}
+		return null;
+		
+	}
 
 	public void setHighCardRank(int highCardRank) {
 		this.highCardRank = highCardRank;

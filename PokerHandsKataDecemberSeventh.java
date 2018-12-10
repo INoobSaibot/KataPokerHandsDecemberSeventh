@@ -19,8 +19,10 @@ public class PokerHandsKataDecemberSeventh {
 		PokerHand flush_lower = new PokerHand("5H 4H 3H 2H 7H");
 		PokerHand straight = new PokerHand("5D 9H 7H 8H 6H");
 		PokerHand straight_lower = new PokerHand("2D 4h 3h 5h 6h");
+		PokerHand threeOfAKind = new PokerHand("AC AS AH 2h 3C");
+		PokerHand threeOfAKind_lower = new PokerHand("5C 5S 5H 2C 3H");
 		
 	
-		Dealer.startGame(straight, straight_lower);
+		Dealer.startGame(threeOfAKind, threeOfAKind_lower);
 	}
 }
