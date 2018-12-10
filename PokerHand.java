@@ -7,6 +7,10 @@ import java.util.List;
 public class PokerHand implements java.lang.Iterable<Card> {
 	
 	private int highCardRank;
+	private int backUpRank1;
+	private int backUpRank2;
+	private int backUpRank3;
+
 	
 	private List<Card> cardList = new ArrayList<Card>();
 	String printableString;
@@ -66,6 +70,30 @@ public class PokerHand implements java.lang.Iterable<Card> {
 
 	public void setHighCardRank(int highCardRank) {
 		this.highCardRank = highCardRank;
+	}
+
+	public int getBackUpRank1() {
+		return backUpRank1;
+	}
+
+	public void setBackUpRank1(int backUpRank1) {
+		this.backUpRank1 = backUpRank1;
+	}
+
+	public int getBackUpRank2() {
+		return backUpRank2;
+	}
+
+	public void setBackUpRank2(int backUpRank2) {
+		this.backUpRank2 = backUpRank2;
+	}
+
+	public int getBackUpRank3() {
+		return backUpRank3;
+	}
+
+	public void setBackUpRank3(int backUpRank3) {
+		this.backUpRank3 = backUpRank3;
 	}
 	
 	

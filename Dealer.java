@@ -1,50 +1,62 @@
 package pokerHandsKata;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Dealer {
 	
 	public static void startGame(PokerHand hand1, PokerHand hand2 ) {
-		//todo
+		
 		int rankPlayer1;
 		int rankPlayer2;
 		
 		rankPlayer1 = determineHandType(hand1).getRank();
 		rankPlayer2 = determineHandType(hand2).getRank();
 		
-		
-		
-		
 		// if hand types are the same, then get rank of high card
 		//	in hand type ** un-implimented
 		if (determineHandType(hand1) 
 				== determineHandType(hand2)) {
-			// todo : check for high card if hand types are same
-			//System.out.println("Hand Types are the same");
+			// check for high card if hand types are same
 			if(hand1.getHighCardRank() > hand2.getHighCardRank()) {
 				System.out.println("Black wins. - with " +
 				determineHandType(hand1) + ": " + hand1.getHighCardString() +
 				" over " + hand2.getHighCardString());
 			}
-			
+			// continue but inverted winner 2 vs 1
 			else if(hand1.getHighCardRank() < hand2.getHighCardRank()) {
 				System.out.println("White wins. with " +
 				determineHandType(hand2) + ": " + hand2.getHighCardString() +
 				" over " + hand1.getHighCardString());
 			}
 			
+			// if primary ranks are equal, check for back up ranks 1 and 2
+			else if(hand1.getBackUpRank1() > hand2.getBackUpRank1()) {
+					System.out.println("Black wins. - with " +
+					determineHandType(hand1) + ": " + hand1.getBackUpRank1() +
+					" over " + hand2.getBackUpRank1());
+					}
+			else if(hand1.getBackUpRank1() < hand2.getBackUpRank1()) {
+				System.out.println("White wins. with " +
+				determineHandType(hand2) + ": " + hand2.getBackUpRank1() +
+				" over " + hand1.getBackUpRank1());
+			}
+			
+			
+			
+			
+			// no clear winner, same hand type same high rank card
 			else{
 				System.out.println("Tie");
 			}
 			
 		}
+	
 		
-		
+		// if hand types are NOT same, more clear winner... just compare
+		// handType ranks example Straight > two pairs
 		else {
-			//todo if hand types are not same declare winner
-			//todo based on type hand type value
-			//System.out.println("Hands not the same");
 			if(rankPlayer1 > rankPlayer2) {
 				System.out.println("Black wins. - with " +
 						determineHandType(hand1));
@@ -54,14 +66,11 @@ public class Dealer {
 						determineHandType(hand2));
 			}
 		}
-		
-		
-	}
+	}// end of method
 
 	
 	private static HandType determineHandType(PokerHand hand) {
-		// TODO Auto-generated method stub
-		//System.out.println(is_straightFlush(hand));
+		
 		if(is_straightFlush(hand)) {
 			return HandType.STRAIGHT_FLUSH;
 		}
@@ -85,7 +94,14 @@ public class Dealer {
 		if(is_three_of_a_kind(hand)) {
 			return HandType.THREE_OF_A_KIND;
 		}
-	
+		
+		if(is_twoPairs(hand)) {
+			return HandType.TWO_PAIRS;
+		}
+		
+		if(is_onePair(hand)) {
+			return HandType.PAIR;
+		}
 		else {
 			hand.setHighCardRank(getHighestCard(hand));
 			return HandType.HIGH_CARD;
@@ -93,17 +109,92 @@ public class Dealer {
 	} // end of method
 	
 	
+	private static boolean is_onePair(PokerHand hand) {
+		// TODO Auto-generated method stub
+		List<Integer> backUpRanks = new ArrayList();
+		boolean onePair;
+		onePair = if_hasMatches(hand, 2);
+		int rank;
+		
+		if(onePair){
+			for (Card card: hand) {
+				rank = card.getRank();
+				//if not cards that are part of the primary pair rank :)
+				if(rank != hand.getHighCardRank())
+					backUpRanks.add(rank);
+			}
+			Collections.sort(backUpRanks, Collections.reverseOrder());
+			//System.out.println(backUpRanks);
+			
+			//for each in highest to lowest list, apply to backup-rank variable
+			
+			hand.setBackUpRank1(backUpRanks.get(0));
+			hand.setBackUpRank2(backUpRanks.get(1));
+			hand.setBackUpRank3(backUpRanks.get(2));
+		}	
+		return onePair;
+	}
+
+
+	private static boolean is_twoPairs(PokerHand hand) {
+		// TODO Auto-generated method stub
+		int pairsFound;
+		pairsFound = 0;
+		int matches;
+		matches = 0;
+		
+		for(Card card: hand) {
+			//reset matches to zero
+			matches=0;
+			for(Card compareCard: hand) {
+				if(card == compareCard){
+					//System.out.println(matches);
+					break;
+					}
+				
+				if(card.getRank() == compareCard.getRank()) {
+					pairsFound +=1;
+					//hand.setHighCardRank(card.getRank());
+					if(card.getRank() > hand.getHighCardRank()) {
+						hand.setBackUpRank1(hand.getHighCardRank());
+						hand.setHighCardRank(card.getRank());		
+					}
+					else
+					{
+						hand.setBackUpRank1(card.getRank());
+					}
+				}
+				if(pairsFound == 2) {
+					if(card.getRank() > hand.getHighCardRank()) {
+						hand.setBackUpRank1(hand.getHighCardRank());
+						hand.setHighCardRank(card.getRank());
+					}
+					return true;
+				}
+			}
+			
+		}
+		return false;
+		
+	}
+
+
 	private static boolean is_three_of_a_kind(PokerHand hand) {
 		// TODO Auto-generated method stub
 		
-		return if_of_a_kind(hand, 3);
+		return if_hasMatches(hand, 3);
 	}
 	
-	private static boolean if_of_a_kind(PokerHand hand, int needed) {
+	private static boolean if_hasMatches(PokerHand hand, int needed) {
+		return has_matches(hand, needed, false);
+	}
+	
+	private static boolean has_matches(PokerHand hand, int needed, boolean twoPairs) {
 		int amountNeeded;
 		amountNeeded = needed;
 		int matches;
 		matches = 0;
+		
 		
 		for(Card card: hand) {
 			matches = 0;
